@@ -11,7 +11,7 @@ from alien import AlienFleet
 from settings import Settings
 from barrier import Barriers
 import shield
-
+from laser_alien import ALasers
 
 class Game:
     RED = (255, 0, 0)
@@ -31,6 +31,9 @@ class Game:
         self.lasers = Lasers(game=self)
         self.ship.set_alien_fleet(self.alien_fleet)
         self.ship.set_lasers(self.lasers)
+        self.alasers = ALasers(game=self)
+        self.alien_fleet.set_alasers(self.alasers)
+
         #self.barriers = Barriers(game=self)
 
         #Barrier Code
@@ -62,6 +65,7 @@ class Game:
           self.game_over()
         print("restarting game")
         self.lasers.empty()
+        self.alasers.empty()
         self.alien_fleet.empty()
         self.alien_fleet.create_fleet()
         self.ship.center_bottom()
@@ -75,6 +79,7 @@ class Game:
         self.ship.update()
         self.alien_fleet.update()
         self.lasers.update()
+        self.alasers.update()
         self.sb.update()
         #self.barriers.update()
 #        self.collison_checks()
@@ -86,6 +91,7 @@ class Game:
         self.ship.draw()
         self.alien_fleet.draw()
         self.lasers.draw()
+        self.alasers.draw()
         self.sb.draw()
         #self.barriers.draw()
 

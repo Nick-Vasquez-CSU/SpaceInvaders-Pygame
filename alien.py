@@ -23,6 +23,10 @@ class AlienFleet:
         self.alien_h, self.alien_w = alien.rect.height, alien.rect.width
         self.fleet = Group()
         self.create_fleet()
+        self.alasers = None
+
+    def set_alasers(self, lasers):
+        self.alasers = lasers
 
     def create_fleet(self):
         n_cols = self.get_number_cols(alien_width=self.alien_w)
@@ -34,7 +38,7 @@ class AlienFleet:
         # Check if UFO spawns
         images = AlienFleet.alien_images
         if randint(0, 5) == 4:
-            alien = Alien(game=self.game, ul=(600, 0), v=self.v, image_list=images, alien_index=3)
+            alien = Alien(game=self.game, ul=(randint(0, 1000), 0), v=self.v, image_list=images, alien_index=3)
             self.fleet.add(alien)
             print('\nUFO!\n\n')
 
@@ -85,6 +89,8 @@ class AlienFleet:
             if not self.ship.is_dying(): self.ship.hit() 
         for alien in self.fleet.sprites():
             alien.update(delta_s=delta_s)
+            if randint(0,1000) == 100:
+                self.alasers.fire()
 
     def draw(self):
         for alien in self.fleet.sprites():
@@ -115,6 +121,8 @@ class Alien(Sprite):
         self.timer = self.normal_timer
         self.dying = False
 
+    def set_lasers(self, lasers):
+        self.lasers = lasers
     def change_v(self, v): self.v = v
     def check_bottom(self): return self.rect.bottom >= self.screen_rect.bottom
     def check_edges(self):
